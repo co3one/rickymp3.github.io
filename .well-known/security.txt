@@ -1,4 +1,4 @@
-Contact: mailto:founder@co3.one
+Contact: mailto:security@co3.one
 Expires: 2027-10-07T23:59:59.000Z
 Preferred-Languages: en
 Canonical: https://www.co3.one/.well-known/security.txt
