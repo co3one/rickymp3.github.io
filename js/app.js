@@ -5,7 +5,7 @@
 (function(){
 'use strict';
 
-const pages = ['home','research','product','contact'];
+const pages = ['home','contact'];
 let cur = 0, locked = false;
 const LOCK = 2500;
 const tagline = document.querySelector('.tagline');
