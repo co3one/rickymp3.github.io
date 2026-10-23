@@ -7,7 +7,6 @@
 
 const M = window.innerWidth < 768;
 const ORANGE = new THREE.Color(0xff6700);
-const GOLD = new THREE.Color(0xC4A265);
 const accent = new THREE.Color().copy(ORANGE);
 const aTgt = new THREE.Color().copy(ORANGE);
 
@@ -114,9 +113,6 @@ const whGeo = new THREE.BufferGeometry();
 whGeo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
 
 const whU = { uAccent: { value: new THREE.Vector3(0.35, 0.35, 0.35) } };
-const WH_GREY = new THREE.Vector3(0.35, 0.35, 0.35);
-const WH_GOLD = new THREE.Vector3(0.769, 0.635, 0.396);
-let whTarget = new THREE.Vector3().copy(WH_GREY);
 const whMat = new THREE.ShaderMaterial({
   transparent: true,
   uniforms: whU,
@@ -152,8 +148,6 @@ S.add(wormhole);
 
 const states = {
   home:     { pos: [-5, 16, 8],    look: [0, -1, 0],   oR: 2.0, oH: 0.8, oS: 0.015 },
-  research: { pos: [0, 22, 3],     look: [0, -2, 0],   oR: 1.0, oH: 0.3, oS: 0.012 },
-  product:  { pos: [8, 6, 16],     look: [0, -1, 0],   oR: 1.8, oH: 0.6, oS: 0.018 },
   contact:  { pos: [-14, 18, -6],  look: [0, -1, 0],   oR: 2.2, oH: 1.0, oS: 0.01  }
 };
 
@@ -170,9 +164,6 @@ window.co3Scene = {
     tPos.set(s.pos[0], s.pos[1], s.pos[2]);
     tLook.set(s.look[0], s.look[1], s.look[2]);
     trans = true; setTimeout(() => { trans = false; }, 2200);
-    whTarget.copy(n === 'product' ? WH_GOLD : WH_GREY);
-    // Immediate 30% kick so the shift is visible instantly
-    whU.uAccent.value.lerp(whTarget, 0.3);
   },
   getState() { return curSt; }
 };
@@ -185,13 +176,6 @@ function animate() {
   requestAnimationFrame(animate);
   const dt = Math.min(clock.getDelta(), 0.05);
   const t = clock.getElapsedTime();
-
-  // Wormhole color — manual lerp, guaranteed to work
-  const cv = whU.uAccent.value;
-  const la = Math.min(dt * 6.0, 0.15);
-  cv.x += (whTarget.x - cv.x) * la;
-  cv.y += (whTarget.y - cv.y) * la;
-  cv.z += (whTarget.z - cv.z) * la;
 
   // Wormhole slow rotation
   wormhole.rotation.y += dt * 0.02;
